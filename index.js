@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get("/api", (req, res) => {
-  res.send("Hello from Render!");
+  res.status(401).json({ error: "Unauthorized Access" });
+});
+app.get("/api/healthz", (req, res) => {
+  res.status(200).json({ status: "healthy" });
 });
 app.post("/api/create", createUrl);
 app.get("/api/:shortId", getUrl);
