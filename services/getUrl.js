@@ -4,12 +4,10 @@ import redis from "../lib/redis.js";
 export default async function getUrl(req, res) {
   const { shortId } = req.params;
 
-  console.log(shortId);
   try {
     const urlRecord = await prisma.url.findUnique({
       where: { shortId: shortId },
     });
-    console.log(urlRecord);
     if (!urlRecord) {
       return res.status(404).json({ error: "Short URL Not found" });
     }

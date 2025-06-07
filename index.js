@@ -10,9 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.post("/create", createUrl);
-
-app.get("/:shortId", getUrl);
+app.get("/api", (req, res) => {
+  res.send("Hello from Render!");
+});
+app.post("/api/create", createUrl);
+app.get("/api/:shortId", getUrl);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
