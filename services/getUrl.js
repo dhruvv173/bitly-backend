@@ -5,9 +5,16 @@ export default async function getUrl(req, res) {
   const { shortId } = req.params;
 
   try {
+    const cachedUrl = await redis.get(shortId);
+    if (cachedUrl) {
+      console.log(`Cache hit for shortId: ${shortId}`);
+      return res.redirect(302, cachedUrl);
+    }
+    console.log(`Cache miss for shortId: ${shortId}`);
     const urlRecord = await prisma.url.findUnique({
       where: { shortId: shortId },
     });
+
     if (!urlRecord) {
       return res.status(404).json({ error: "Short URL Not found" });
     }
@@ -19,6 +26,8 @@ export default async function getUrl(req, res) {
         .status(410)
         .json({ error: "Short URL expired, please create a new one!" });
     }
+
+    await redis.set(shortId, urlRecord.originalUrl);
 
     return res.redirect(302, urlRecord.originalUrl);
   } catch (err) {
