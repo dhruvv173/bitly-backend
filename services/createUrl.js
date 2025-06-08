@@ -21,8 +21,8 @@ export default async function createUrl(req, res) {
   try {
     await prisma.url.create({
       data: {
-        shortId,
-        originalUrl,
+        shortId: shortId,
+        originalUrl: originalUrl,
         expiresAt: oneYearFromNow,
       },
     });
