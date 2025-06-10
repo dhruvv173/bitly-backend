@@ -20,7 +20,7 @@ app.get("/api/healthz", (req, res) => {
   res.status(200).json({ status: "healthy" });
 });
 app.post("/api/create", createUrl);
-app.get("/api/:shortId", getUrl);
+app.get("/:shortId", getUrl);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
