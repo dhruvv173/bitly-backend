@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import createUrl from "./services/createUrl.js";
 import getUrl from "./services/getUrl.js";
 
@@ -9,6 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).send("Service is live 🎉");
